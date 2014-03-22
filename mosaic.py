@@ -12,6 +12,7 @@ import csv
 import math
 
 DESIRED_SIZE = 1200,800
+SCALE = 0.5
 
 def mosaic( csvFile ):
   result = None
@@ -22,8 +23,8 @@ def mosaic( csvFile ):
     img = cv2.imread( filename, cv2.CV_LOAD_IMAGE_COLOR )
     while True:
       a = math.radians(int(degAngle))
-      M = np.float32( [[math.cos(a), math.sin(a), x],
-                       [-math.sin(a),math.cos(a),y],
+      M = np.float32( [[SCALE*math.cos(a), SCALE*math.sin(a), x],
+                       [SCALE*-math.sin(a), SCALE*math.cos(a), y],
                        [0,0,1]])
       img2 = cv2.warpPerspective(img,M,DESIRED_SIZE)
       tmp = result
