@@ -16,6 +16,19 @@ class Cv2Test( unittest.TestCase ):
         contours, hierarchy = cv2.findContours( img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE )
         self.assertEqual( len(contours), 1 )
 
+    def testContoursInverse( self ):
+        "does contours use 4 or 8 neighbors?"
+        img = np.ones([10,10,1], dtype=np.uint8)
+        contours, hierarchy = cv2.findContours( img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE )
+        self.assertEqual( len(contours), 1 )
+        img[3][3] = 0
+        contours, hierarchy = cv2.findContours( img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE )
+        self.assertEqual( len(contours), 2 )
+        img[4][4] = 0
+        contours, hierarchy = cv2.findContours( img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE )
+        self.assertEqual( len(contours), 3 )
+
+
     def testContours2( self ):
         # see http://stackoverflow.com/questions/3286024/is-there-any-official-place-to-find-opencv-article-references
         img = np.zeros([10,10,1], dtype=np.uint8)
